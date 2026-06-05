@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-06-04T12:00:00+00:00",
+  "schema_version": "1.0",
+  "hamming_max": 10,
+  "groups": [
+    {
+      "group_id": 1,
+      "group_type": "EXACT",
+      "master_asset_id": 101,
+      "confidence": 1.0,
+      "members": [
+        {
+          "asset_id": 101,
+          "path": "/Volumes/Archive/2024/Roll32_Frame14_Export.jpg",
+          "file_type": "JPEG",
+          "size_bytes": 8450000,
+          "width": 4000,
+          "height": 6000,
+          "mtime": 1715000000.0,
+          "is_master": true,
+          "confidence": 1.0,
+          "match_type": "EXACT"
+        },
+        {
+          "asset_id": 102,
+          "path": "/Volumes/Archive/2024/copy/Roll32_Frame14_Export.jpg",
+          "file_type": "JPEG",
+          "size_bytes": 8450000,
+          "width": 4000,
+          "height": 6000,
+          "mtime": 1715000100.0,
+          "is_master": false,
+          "confidence": 1.0,
+          "match_type": "EXACT"
+        }
+      ]
+    },
+    {
+      "group_id": 2,
+      "group_type": "VISUAL",
+      "master_asset_id": 201,
+      "confidence": 0.92,
+      "members": [
+        {
+          "asset_id": 201,
+          "path": "/Volumes/Archive/2024/Roll32_Frame14_Lab.tif",
+          "file_type": "TIFF",
+          "size_bytes": 120000000,
+          "width": 8000,
+          "height": 10000,
+          "mtime": 1714000000.0,
+          "is_master": true,
+          "confidence": 0.95,
+          "match_type": "VISUAL"
+        },
+        {
+          "asset_id": 202,
+          "path": "/Volumes/Archive/2024/Roll32_Frame14_Lab_resized.jpg",
+          "file_type": "JPEG",
+          "size_bytes": 3200000,
+          "width": 2000,
+          "height": 2500,
+          "mtime": 1714001000.0,
+          "is_master": false,
+          "confidence": 0.92,
+          "match_type": "VISUAL"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+MATRIX Catalog ERD (ASCII)
+==========================
+
+  lineage_groups                    duplicate_groups
+  +------------------+              +-------------------+
+  | id (PK)          |              | id (PK)           |
+  | roll_number      |              | group_type        |
+  | frame_number     |              | master_asset_id --+--+
+  | created_at       |              | confidence        |  |
+  +--------+---------+              | created_at        |  |
+           |                        +---------+---------+  |
+           |                                  |            |
+           |         +------------------------+|            |
+           |         |                        ||            |
+           v         v                        vv            v
+  +-------------------------------------------------------------+
+  | assets                                                      |
+  | id (PK)  path (UNIQUE)  sha256  phash  file_type            |
+  | size_bytes  width  height  mtime                            |
+  | parent_id (FK self)  xmp_sidecar_path                       |
+  | duplicate_group_id (FK)  lineage_group_id (FK)              |
+  | review_status  confidence  is_master                          |
+  | roll_number  frame_number  lab  scanner  lineage_role         |
+  +------------------+------------------------------------------+
+                     |
+                     | 1:N
+                     v
+            +------------------+       +-------------------+
+            | review_decisions |       | quarantine_moves  |
+            | id (PK)          |       | asset_id (FK)     |
+            | duplicate_group  |       | source/quarantine |
+            | action           |       | review_decision   |
+            | dry_run          |       +-------------------+
+
+Flow: scan -> assets | dedup -> duplicate_groups | lineage -> lineage_groups
+      review -> review_decisions + quarantine_moves (never hard delete)

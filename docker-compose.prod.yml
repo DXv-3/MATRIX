@@ -1,0 +1,42 @@
+services:
+  matrix:
+    build:
+      context: .
+      platform: linux/arm64
+    platform: linux/arm64
+    container_name: matrix-prod
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MATRIX_ENV: production
+      MATRIX_DATA_DIR: /data
+      MATRIX_QUARANTINE: /quarantine
+      MATRIX_BIND_PUBLIC: "0"
+    ports:
+      - "127.0.0.1:8765:8765"
+    volumes:
+      - matrix_data:/data
+      - ${MATRIX_ARCHIVE_PATH:-./archive}:/archive:ro
+      - matrix_quarantine:/quarantine
+    command:
+      [
+        "python",
+        "-m",
+        "uvicorn",
+        "matrix.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8765",
+      ]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/api/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  matrix_data:
+  matrix_quarantine:

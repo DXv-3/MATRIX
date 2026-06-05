@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MATRIX — Photo Archive</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◈</span>
+      <div>
+        <h1>MATRIX</h1>
+        <p class="tagline">Archive intelligence</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="scan">Scan</button>
+      <button class="tab" data-tab="review">Review</button>
+      <button class="tab" data-tab="lineage">Lineage</button>
+      <button class="tab" data-tab="assets">Assets</button>
+    </nav>
+    <div class="status-pill" id="liveStatus">Connecting…</div>
+  </header>
+
+  <main>
+    <section id="panel-dashboard" class="panel active">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="card">
+        <h2>Quick actions</h2>
+        <div class="actions-row">
+          <button class="btn primary" id="btnRefreshReport">Refresh</button>
+          <button class="btn" id="btnRunDedup">Run dedup</button>
+          <button class="btn" id="btnOpenReview">Go to review</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Live log</h2>
+        <pre class="log" id="eventLog"></pre>
+      </div>
+    </section>
+
+    <section id="panel-scan" class="panel">
+      <div class="card">
+        <h2>Scan archive</h2>
+        <label>Root path</label>
+        <input type="text" id="scanRoot" placeholder="/Volumes/Photos" />
+        <label>Workers</label>
+        <input type="number" id="scanWorkers" value="4" min="1" max="16" />
+        <div class="actions-row">
+          <button class="btn primary" id="btnScan">Scan only</button>
+          <button class="btn accent" id="btnPipeline">Full pipeline (scan + dedup)</button>
+        </div>
+        <pre class="log" id="scanResult"></pre>
+      </div>
+    </section>
+
+    <section id="panel-review" class="panel">
+      <div class="review-toolbar">
+        <label class="toggle">
+          <input type="checkbox" id="dryRun" checked />
+          Dry-run (no quarantine moves)
+        </label>
+        <button class="btn" id="btnReloadGroups">Reload queue</button>
+      </div>
+      <div id="reviewQueue" class="review-queue"></div>
+    </section>
+
+    <section id="panel-lineage" class="panel">
+      <button class="btn" id="btnReloadLineage">Reload lineage</button>
+      <div id="lineageList" class="lineage-list"></div>
+    </section>
+
+    <section id="panel-assets" class="panel">
+      <button class="btn" id="btnReloadAssets">Reload assets</button>
+      <div class="table-wrap">
+        <table id="assetsTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Preview</th><th>File</th><th>Type</th><th>Status</th><th>Conf</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>No auto-delete · Quarantine only · Catalog: <code id="catalogPath">—</code></span>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>

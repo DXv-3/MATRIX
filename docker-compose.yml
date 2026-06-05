@@ -1,0 +1,24 @@
+services:
+  matrix:
+    build:
+      context: .
+      platform: linux/arm64
+    platform: linux/arm64
+    container_name: matrix
+    ports:
+      - "8765:8765"
+    environment:
+      MATRIX_DATA_DIR: /data
+      MATRIX_QUARANTINE: /quarantine
+      MATRIX_SCAN_ROOTS: /archive
+      MATRIX_PHASH_MAX_DISTANCE: "10"
+    volumes:
+      - matrix_data:/data
+      - ${MATRIX_ARCHIVE_PATH:-./archive}:/archive:ro
+      - matrix_quarantine:/quarantine
+    command: ["matrix", "serve", "--host", "0.0.0.0", "--port", "8765"]
+    restart: unless-stopped
+
+volumes:
+  matrix_data:
+  matrix_quarantine:

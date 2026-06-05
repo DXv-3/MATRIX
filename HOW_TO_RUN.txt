@@ -1,0 +1,77 @@
+MATRIX — run on a new Mac (for your friend)
+--------------------------------------------
+
+WHY SETUP FAILED (Javier / new Mac)
+-----------------------------------
+Error:
+  .venv/bin/pip: /Users/vinnygilberti/MATRIX/.venv/bin/python3.14: bad interpreter
+  zsh: command not found: matrix
+
+Cause: the folder included Vinny's .venv from another Mac. pip still points at
+Vinny's home directory, which does not exist on your Mac.
+
+FIX (run on YOUR Mac, in Terminal):
+  cd ~/MATRIX
+  rm -rf .venv
+  ./scripts/friend-setup.sh
+  source .venv/bin/activate
+  matrix app
+
+Do NOT use production-setup.sh until .venv is deleted, unless you pulled the
+latest scripts (they auto-delete a broken .venv).
+
+WHY "file not found" happened (other cases)
+-------------------------------------------
+• Commands like  cd /Users/vinnygilberti/MATRIX  only work on Vinny's Mac.
+• AirDrop may copy a partial folder or a .venv that does not work on another Mac.
+• "19 items" often means not the full project (full MATRIX has many more files).
+
+WHAT TO SEND
+------------
+Best: run on Vinny's Mac:
+  cd ~/MATRIX
+  ./scripts/package-for-friend.sh
+Then AirDrop:  MATRIX-for-friend.zip  (on Desktop)
+
+Your friend unzips it — they get a folder named MATRIX.
+
+FIRST TIME ON FRIEND'S MAC (pick one)
+--------------------------------------
+
+A) Easiest — double-click:
+   MATRIX/Start MATRIX.command
+   (First run installs Python packages — wait 2–5 minutes.)
+
+B) Terminal:
+   cd ~/Downloads/MATRIX
+   chmod +x scripts/*.sh "Start MATRIX.command"
+   ./scripts/friend-setup.sh
+   source .venv/bin/activate
+   matrix app
+
+REQUIREMENTS
+------------
+• Mac with Python 3.11+  (check: python3 --version)
+  Install from https://www.python.org/downloads/ if needed.
+
+OPEN THE APP
+------------
+Browser: http://127.0.0.1:8765/
+API token: open MATRIX/.env and copy MATRIX_API_TOKEN=...
+
+SCAN THEIR PHOTOS (not Vinny's catalog)
+---------------------------------------
+Catalog lives in ~/.matrix/ on each Mac — not inside the MATRIX folder.
+
+   cd ~/Downloads/MATRIX
+   source .venv/bin/activate
+   matrix scan --root "$HOME/Pictures"
+   matrix dedup
+   matrix ui
+
+TROUBLESHOOTING
+---------------
+• "no such file" → wrong folder; use  cd  to the unzipped MATRIX folder.
+• "matrix: command not found" → run  source .venv/bin/activate  first.
+• "Python 3.11" error → install newer Python.
+• Setup failed → send friend  ~/.matrix/launcher.err.log  if it exists.
